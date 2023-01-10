@@ -4,7 +4,7 @@ namespace App\DTO;
 
 use Illuminate\Http\Request;
 
-class CreateCityDTO
+class CityDTO
 {
     public string $name;
 

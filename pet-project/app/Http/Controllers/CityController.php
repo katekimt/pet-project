@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\CreateCityDTO;
-use App\Http\Requests\CityRequest;
+use App\DTO\CityDTO;
+use App\Http\Requests\CreateCityRequest;
+use App\Http\Requests\UpdateCityRequest;
 use App\Http\Resources\CityResource;
 use App\Repository\CityRepository;
 use App\Service\CreateCityService;
+use App\Service\UpdateCityService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -27,51 +29,41 @@ class CityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CreateCityRequest $request
      * @param CreateCityService $createCityService
      * @return CityResource
      */
     public function store(
-        Request           $request,
+        CreateCityRequest $request,
         CreateCityService $createCityService
     ): CityResource
     {
-        $cityDTO = $createCityService->run(CreateCityDTO::make($request));
-        return new CityResource($cityDTO);
+        $createCityDTO = $createCityService->run(CityDTO::make($request));
+        return new CityResource($createCityDTO);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return Response
+     * @param string $city
+     * @param CityRepository $rCity
+     * @return AnonymousResourceCollection
      */
-    public function show($id)
+    public function show(string $city, CityRepository $rCity): AnonymousResourceCollection
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
+        return CityResource::collection($rCity->getByName($city));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int $id
-     * @return Response
+     * @param UpdateCityRequest $request
+     * @param string $city
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCityRequest $request, string $city, UpdateCityService $updateCityService): CityResource
     {
-        //
+        $updateCity = $updateCityService->run($request, $city);
+        return new CityResource($updateCity);
     }
 
     /**

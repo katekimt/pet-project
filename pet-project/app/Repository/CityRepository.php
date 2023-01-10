@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
-use App\DTO\CreateCityDTO;
+use App\DTO\CityDTO;
 use App\Models\City;
 use Illuminate\Database\Eloquent\Collection;
+use App\Http\Requests\UpdateCityRequest;
 
 class CityRepository
 {
@@ -20,7 +21,7 @@ class CityRepository
         return $this->city->all();
     }
 
-    public function save(CreateCityDTO $cityDTO): ?City
+    public function save(CityDTO $cityDTO): ?City
     {
         return $this->city->create([
             'name' => $cityDTO->name,
@@ -29,5 +30,15 @@ class CityRepository
         ]);
     }
 
+    public function getByName($nameOfCity)
+    {
+        return $this->city->where('name', $nameOfCity)->first();
+    }
+
+    public function update(City $updatedCity, UpdateCityRequest $request): City
+    {
+         $updatedCity->update($request->validated());
+         return $updatedCity;
+    }
 
 }

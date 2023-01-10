@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\DTO\CreateCityDTO;
+use App\DTO\CityDTO;
 use App\Repository\CityRepository;
 use Validator;
 use App\Models\City;
@@ -15,7 +15,8 @@ class CreateCityService
         private CityRepository $rCity,
     ){
     }
-    public function run(CreateCityDTO $cityDTO): JsonResponse|City|null
+
+    public function run(CityDTO $cityDTO): JsonResponse|City|null
     {
         $validator = $this->getValidator($cityDTO);
 
@@ -25,7 +26,7 @@ class CreateCityService
         return $this->rCity->save($cityDTO);
     }
 
-    private function getValidator(CreateCityDTO $cityDTO)
+    private function getValidator(CityDTO $cityDTO)
     {
         $rule = 'required|string|min:2';
 
