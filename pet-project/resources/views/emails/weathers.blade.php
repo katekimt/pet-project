@@ -11,9 +11,9 @@
         <tbody>
         @for($i = 0; $i < count($data['time']); $i++)
             <tr>
-                <td >{{$data['time'][$i]}}</td>
-                <td >{{$data['temperature_2m_min'][$i]}}</td>
-                <td >{{$data['temperature_2m_max'][$i]}}</td>
+                <td>{{$data['time'][$i]}}</td>
+                <td>{{$data['temperature_2m_min'][$i]}}</td>
+                <td>{{$data['temperature_2m_max'][$i]}}</td>
             </tr>
         @endfor
         </tbody>

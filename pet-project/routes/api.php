@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WeatherController;
 
@@ -22,4 +23,5 @@ Route::controller(AuthController::class)->group(function(){
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::get('weather/{city}', WeatherController::class);
+    Route::resource('cities' ,CityController::class);
 });
