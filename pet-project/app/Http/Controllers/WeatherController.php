@@ -12,8 +12,7 @@ class WeatherController extends Controller
         WeatherService $weatherService,
         CreateWeatherMsgService $createWeatherMsgService)
     {
-        $data = $weatherService->run(config('app.cities.' . $city));
+        $data = $weatherService->run($city);
         $createWeatherMsgService->run($data, $city);
-
     }
 }

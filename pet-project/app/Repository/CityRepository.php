@@ -30,7 +30,7 @@ class CityRepository
         ]);
     }
 
-    public function getByName($nameOfCity)
+    public function getByName($nameOfCity) :?City
     {
         return $this->city->where('name', $nameOfCity)->first();
     }

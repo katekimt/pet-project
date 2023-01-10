@@ -11,7 +11,8 @@ class DeleteCityService
     ){
     }
 
-    public function run($city){
+    public function run($city): void
+    {
         $deletedCity = $this->rCity->getByName($city);
         $this->rCity->delete($deletedCity);
     }

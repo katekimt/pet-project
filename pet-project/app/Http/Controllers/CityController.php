@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\DTO\CityDTO;
-use App\Enums\Role;
 use App\Http\Requests\CreateCityRequest;
 use App\Http\Requests\UpdateCityRequest;
 use App\Http\Resources\CityResource;
@@ -38,17 +37,15 @@ class CityController extends Controller
      *
      * @param CreateCityRequest $request
      * @param CreateCityService $createCityService
-     * @return CityResource|JsonResponse
+     * @return CityResource
      */
     public function store(
         CreateCityRequest $request,
         CreateCityService $createCityService
-    ): CityResource|JsonResponse
+    ): CityResource
     {
         $createCityDTO = $createCityService->run(CityDTO::make($request->validated()));
         return new CityResource($createCityDTO);
-
-
     }
 
     /**
@@ -69,19 +66,16 @@ class CityController extends Controller
      * @param UpdateCityRequest $request
      * @param string $city
      * @param UpdateCityService $updateCityService
-     * @return CityResource | JsonResponse
+     * @return CityResource
      */
     public function update(
         UpdateCityRequest $request,
-        string            $city,
+        string $city,
         UpdateCityService $updateCityService
-    ): CityResource|JsonResponse
+    ): CityResource
     {
-        if (auth()->user()->isAdmin()) {
-            $updateCity = $updateCityService->run($request, $city);
-            return new CityResource($updateCity);
-        }
-        return response()->json(['message' => 'Action Forbidden']);
+        $updateCity = $updateCityService->run($request, $city);
+        return new CityResource($updateCity);
     }
 
     /**
@@ -93,10 +87,8 @@ class CityController extends Controller
      */
     public function destroy(string $city, DeleteCityService $deleteCityService): JsonResponse
     {
-        if (auth()->user()->isAdmin()) {
-            $deleteCityService->run($city);
-            return response()->json(null, 204);
-        }
-        return response()->json(['message' => 'Action Forbidden']);
+        $deleteCityService->run($city);
+        return response()->json(null, 204);
+
     }
 }
