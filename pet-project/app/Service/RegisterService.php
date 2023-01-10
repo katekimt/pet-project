@@ -12,7 +12,6 @@ class RegisterService
     public function __construct(
        private UserRepository $rUser,
     ){
-
     }
 
     public function run(RegisterDTO $registerDTO): JsonResponse|array

@@ -2,46 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\CreateCityDTO;
+use App\Http\Requests\CityRequest;
+use App\Http\Resources\CityResource;
+use App\Repository\CityRepository;
+use App\Service\CreateCityService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class CityController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param CityRepository $rCity
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(CityRepository $rCity): AnonymousResourceCollection
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return CityResource::collection($rCity->getAll());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param CreateCityService $createCityService
+     * @return CityResource
      */
-    public function store(Request $request)
+    public function store(
+        Request           $request,
+        CreateCityService $createCityService
+    ): CityResource
     {
-        //
+        $cityDTO = $createCityService->run(CreateCityDTO::make($request));
+        return new CityResource($cityDTO);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function show($id)
     {
@@ -51,8 +54,8 @@ class CityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function edit($id)
     {
@@ -62,9 +65,9 @@ class CityController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -74,8 +77,8 @@ class CityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function destroy($id)
     {
