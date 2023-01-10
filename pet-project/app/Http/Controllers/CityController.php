@@ -3,18 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\DTO\CityDTO;
+use App\Enums\Role;
 use App\Http\Requests\CreateCityRequest;
 use App\Http\Requests\UpdateCityRequest;
 use App\Http\Resources\CityResource;
+use App\Models\City;
 use App\Repository\CityRepository;
 use App\Service\CreateCityService;
+use App\Service\DeleteCityService;
 use App\Service\UpdateCityService;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Http\Response;
 
 class CityController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(City::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,15 +38,17 @@ class CityController extends Controller
      *
      * @param CreateCityRequest $request
      * @param CreateCityService $createCityService
-     * @return CityResource
+     * @return CityResource|JsonResponse
      */
     public function store(
         CreateCityRequest $request,
         CreateCityService $createCityService
-    ): CityResource
+    ): CityResource|JsonResponse
     {
-        $createCityDTO = $createCityService->run(CityDTO::make($request));
+        $createCityDTO = $createCityService->run(CityDTO::make($request->validated()));
         return new CityResource($createCityDTO);
+
+
     }
 
     /**
@@ -59,21 +68,35 @@ class CityController extends Controller
      *
      * @param UpdateCityRequest $request
      * @param string $city
+     * @param UpdateCityService $updateCityService
+     * @return CityResource | JsonResponse
      */
-    public function update(UpdateCityRequest $request, string $city, UpdateCityService $updateCityService): CityResource
+    public function update(
+        UpdateCityRequest $request,
+        string            $city,
+        UpdateCityService $updateCityService
+    ): CityResource|JsonResponse
     {
-        $updateCity = $updateCityService->run($request, $city);
-        return new CityResource($updateCity);
+        if (auth()->user()->isAdmin()) {
+            $updateCity = $updateCityService->run($request, $city);
+            return new CityResource($updateCity);
+        }
+        return response()->json(['message' => 'Action Forbidden']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return Response
+     * @param string $city
+     * @param DeleteCityService $deleteCityService
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(string $city, DeleteCityService $deleteCityService): JsonResponse
     {
-        //
+        if (auth()->user()->isAdmin()) {
+            $deleteCityService->run($city);
+            return response()->json(null, 204);
+        }
+        return response()->json(['message' => 'Action Forbidden']);
     }
 }

@@ -41,4 +41,9 @@ class CityRepository
          return $updatedCity;
     }
 
+    public function delete($deletedCity): void
+    {
+        $deletedCity->delete();
+    }
+
 }

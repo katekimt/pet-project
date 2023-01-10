@@ -18,12 +18,12 @@ class CityDTO
         $this->longitude = $longitude;
     }
 
-    public static function make(Request $request): static
+    public static function make(array $validatedRequest): static
     {
         return new static(
-            $request->get('name'),
-            $request->get('latitude'),
-            $request->get('longitude'),
+            $validatedRequest['name'],
+            $validatedRequest['latitude'],
+            $validatedRequest['longitude'],
         );
     }
 }
