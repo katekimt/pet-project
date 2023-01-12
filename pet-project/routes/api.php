@@ -22,9 +22,9 @@ Route::controller(AuthController::class)->group(function(){
 });
 
 Route::middleware('auth:sanctum')->group( function () {
-
+    Route::get('weather/{city}', WeatherController::class);
     Route::resource('cities' ,CityController::class);
 });
 
 
-Route::get('weather/{city}', WeatherController::class);
+
