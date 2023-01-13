@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Repository\CityRepository;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 
 class WeatherService

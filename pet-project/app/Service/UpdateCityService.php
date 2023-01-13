@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Http\Requests\UpdateCityRequest;
 use App\Repository\CityRepository;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\Models\City;
 use Illuminate\Http\JsonResponse;
 

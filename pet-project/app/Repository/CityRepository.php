@@ -30,7 +30,7 @@ class CityRepository
         ]);
     }
 
-    public function getByName($nameOfCity) :?City
+    public function getByName(string $nameOfCity) :?City
     {
         return $this->city->where('name', $nameOfCity)->first();
     }
@@ -41,7 +41,7 @@ class CityRepository
          return $updatedCity;
     }
 
-    public function delete($deletedCity): void
+    public function delete(City $deletedCity): void
     {
         $deletedCity->delete();
     }
