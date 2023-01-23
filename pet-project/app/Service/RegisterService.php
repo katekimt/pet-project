@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\DTO\RegisterDTO;
 use App\Repository\UserRepository;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 
 class RegisterService

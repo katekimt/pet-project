@@ -9,7 +9,6 @@ use App\Http\Requests\UpdateCityRequest;
 
 class CityRepository
 {
-
     public function __construct(
         private City $city,
     )

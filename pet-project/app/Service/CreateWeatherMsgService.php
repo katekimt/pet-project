@@ -3,9 +3,7 @@
 namespace App\Service;
 
 use App\Jobs\WeatherMailJob;
-use App\Mail\WeatherMail;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
 
 class CreateWeatherMsgService
 {
