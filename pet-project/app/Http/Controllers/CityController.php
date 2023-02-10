@@ -24,7 +24,7 @@ class CityController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param CityRepository $rCity
+     * @param  CityRepository  $rCity
      * @return AnonymousResourceCollection
      */
     public function index(CityRepository $rCity): AnonymousResourceCollection
@@ -35,24 +35,24 @@ class CityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param CreateCityRequest $request
-     * @param CreateCityService $createCityService
+     * @param  CreateCityRequest  $request
+     * @param  CreateCityService  $createCityService
      * @return CityResource
      */
     public function store(
         CreateCityRequest $request,
         CreateCityService $createCityService
-    ): CityResource
-    {
+    ): CityResource {
         $createCityDTO = $createCityService->run(CityDTO::make($request->validated()));
+
         return new CityResource($createCityDTO);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param string $city
-     * @param CityRepository $rCity
+     * @param  string  $city
+     * @param  CityRepository  $rCity
      * @return AnonymousResourceCollection
      */
     public function show(string $city, CityRepository $rCity): AnonymousResourceCollection
@@ -63,32 +63,32 @@ class CityController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateCityRequest $request
-     * @param string $city
-     * @param UpdateCityService $updateCityService
+     * @param  UpdateCityRequest  $request
+     * @param  string  $city
+     * @param  UpdateCityService  $updateCityService
      * @return CityResource
      */
     public function update(
         UpdateCityRequest $request,
         string $city,
         UpdateCityService $updateCityService
-    ): CityResource
-    {
+    ): CityResource {
         $updateCity = $updateCityService->run($request, $city);
+
         return new CityResource($updateCity);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param string $city
-     * @param DeleteCityService $deleteCityService
+     * @param  string  $city
+     * @param  DeleteCityService  $deleteCityService
      * @return JsonResponse
      */
     public function destroy(string $city, DeleteCityService $deleteCityService): JsonResponse
     {
         $deleteCityService->run($city);
-        return response()->json(null, 204);
 
+        return response()->json(null, 204);
     }
 }

@@ -3,27 +3,27 @@
 namespace App\Service;
 
 use App\Http\Requests\UpdateCityRequest;
-use App\Repository\CityRepository;
-use Illuminate\Support\Facades\Validator;
 use App\Models\City;
+use App\Repository\CityRepository;
 use Illuminate\Http\JsonResponse;
-
+use Illuminate\Support\Facades\Validator;
 
 class UpdateCityService
 {
     public function __construct(
         private CityRepository $rCity,
-    ){
+    ) {
     }
 
     public function run(UpdateCityRequest $request, string $city): JsonResponse|City
     {
         $validator = $this->getValidator($request);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['Validation Error.', $validator->errors()]);
         }
         $updatedCity = $this->rCity->getByName($city);
+
         return $this->rCity->update($updatedCity, $request);
     }
 
@@ -31,7 +31,7 @@ class UpdateCityService
     {
         $rule = 'nullable|string|min:2';
 
-        return Validator::make((array)$request, [
+        return Validator::make((array) $request, [
             'name' => $rule,
         ]);
     }

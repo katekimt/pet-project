@@ -10,9 +10,9 @@ class UserRepository
 {
     public function __construct(
         private User $user
-    ){
-
+    ) {
     }
+
     public function save(RegisterDTO $registerDTO): ?User
     {
         return $this->user->create([

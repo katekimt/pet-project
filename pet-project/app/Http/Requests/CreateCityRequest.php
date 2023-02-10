@@ -24,6 +24,7 @@ class CreateCityRequest extends FormRequest
     public function rules()
     {
         $rule = 'required|string';
+
         return [
             'name' => $rule,
             'latitude' => $rule,

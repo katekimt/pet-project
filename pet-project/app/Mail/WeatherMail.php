@@ -26,7 +26,7 @@ class WeatherMail extends Mailable
      */
     public function build(): static
     {
-        return $this->subject('Weekly weather in ' . $this->city)
+        return $this->subject('Weekly weather in '.$this->city)
             ->with([
                 'email' => $this->email,
                 'data' => $this->data,

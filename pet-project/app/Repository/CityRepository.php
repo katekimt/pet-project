@@ -3,16 +3,15 @@
 namespace App\Repository;
 
 use App\DTO\CityDTO;
+use App\Http\Requests\UpdateCityRequest;
 use App\Models\City;
 use Illuminate\Database\Eloquent\Collection;
-use App\Http\Requests\UpdateCityRequest;
 
 class CityRepository
 {
     public function __construct(
         private City $city,
-    )
-    {
+    ) {
     }
 
     public function getAll(): Collection
@@ -29,20 +28,20 @@ class CityRepository
         ]);
     }
 
-    public function getByName(string $nameOfCity) :?City
+    public function getByName(string $nameOfCity): ?City
     {
         return $this->city->where('name', $nameOfCity)->first();
     }
 
     public function update(City $updatedCity, UpdateCityRequest $request): City
     {
-         $updatedCity->update($request->validated());
-         return $updatedCity;
+        $updatedCity->update($request->validated());
+
+        return $updatedCity;
     }
 
     public function delete(City $deletedCity): void
     {
         $deletedCity->delete();
     }
-
 }

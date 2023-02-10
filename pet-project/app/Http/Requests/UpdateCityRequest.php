@@ -24,6 +24,7 @@ class UpdateCityRequest extends FormRequest
     public function rules()
     {
         $rule = 'string|nullable';
+
         return [
             'name' => $rule,
             'latitude' => $rule,

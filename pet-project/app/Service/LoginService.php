@@ -12,10 +12,10 @@ class LoginService
         if (Auth::attempt(['email' => $loginDTO->email, 'password' => $loginDTO->password])) {
             $user = Auth::user();
             $success['token'] = $user->createToken('MyApp')->plainTextToken;
+
             return $success['token'];
         } else {
             return 'Unauthorised.';
         }
     }
-
 }

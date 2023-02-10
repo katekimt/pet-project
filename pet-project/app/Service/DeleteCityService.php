@@ -8,7 +8,7 @@ class DeleteCityService
 {
     public function __construct(
         private CityRepository $rCity,
-    ){
+    ) {
     }
 
     public function run($city): void
@@ -16,5 +16,4 @@ class DeleteCityService
         $deletedCity = $this->rCity->getByName($city);
         $this->rCity->delete($deletedCity);
     }
-
 }

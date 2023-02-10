@@ -14,7 +14,8 @@ class RegisterDTO
 
     public string $c_password;
 
-    public function __construct(string $name, string $email, string $password, string $c_password){
+    public function __construct(string $name, string $email, string $password, string $c_password)
+    {
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;

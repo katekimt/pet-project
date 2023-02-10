@@ -3,26 +3,26 @@
 namespace App\Service;
 
 use App\DTO\CityDTO;
-use App\Repository\CityRepository;
-use Illuminate\Support\Facades\Validator;
 use App\Models\City;
+use App\Repository\CityRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Validator;
 
 class CreateCityService
 {
-
     public function __construct(
         private CityRepository $rCity,
-    ){
+    ) {
     }
 
     public function run(CityDTO $cityDTO): JsonResponse|City|null
     {
         $validator = $this->getValidator($cityDTO);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['Validation Error.', $validator->errors()]);
         }
+
         return $this->rCity->save($cityDTO);
     }
 
@@ -30,7 +30,7 @@ class CreateCityService
     {
         $rule = 'required|string|min:2';
 
-        return Validator::make((array)$cityDTO, [
+        return Validator::make((array) $cityDTO, [
             'name' => $rule,
         ]);
     }
